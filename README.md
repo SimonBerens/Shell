@@ -23,6 +23,7 @@ Making a shell in C
 * Piping
 * Stdin/Stdout redirection
 * Errors
+* Catch ctrl-c
 
 ## Limits
 * 1000 character input max
@@ -32,4 +33,4 @@ Making a shell in C
 
 
 ## Known Bugs
-* Shows 2 errors when ";" is entered
+* Shows error for trailing semicolon
