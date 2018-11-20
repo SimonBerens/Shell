@@ -15,16 +15,21 @@ Making a shell in C
   * e.g. ls, ps, etc.
 * Semicolon parsing
   * Supports multiple commands
-  * No spaces after each semicolon
 * Shows current working directory
 * Supports arguments for commands
 
 ## To Be Added
 * Tab autocomplete
-* Stdin/Stdout >
-* Colors
+* Piping
+* Stdin/Stdout redirection
 * Errors
 
+## Limits
+* 1000 character input max
+* 10 arguments per command max
+
 ## Function Descriptions
-* parse.c
-  - char 
+
+
+## Known Bugs
+* Shows 2 errors when ";" is entered

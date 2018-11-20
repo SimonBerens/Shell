@@ -6,24 +6,29 @@
 #include <errno.h>
 #include <limits.h>
 
+#define RED     "\x1b[31m"
+#define BLUE    "\x1b[34m"
+#define RESET   "\x1b[0m"
+
 int main() {
-    printf("Welcome to CShell\n");
     while (1) {
         char cwd[PATH_MAX];
         getcwd(cwd, sizeof(cwd));
-        printf("%s> ", cwd); // todo: colors
+        printf(BLUE"%s" RED "> " RESET, cwd);
         char *command = calloc(1000, sizeof(char));
         scanf(" %[^\n]", command);
         char *prev;
         while ((prev = strsep(&command, ";"))) {
-            // todo: support spaces after
-            char **args = calloc(6, sizeof(char *));
-            for (int i = 0; prev; ++i) args[i] = strsep(&prev, " ");
+            char **args = calloc(10, sizeof(char *));
+            for (int i = 0; prev; i += 1){
+                while (*prev == ' ') prev++;
+                args[i] = strsep(&prev, " ");
+            }
             if (!strcmp(args[0], "exit")) return 0;
             else if (!strcmp(args[0], "cd")) chdir(args[1]);
             else if (!fork()) {
                 execvp(args[0], args);
-                exit(1); // todo: strerror
+                exit(1);
             }
             int status;
             wait(&status);
