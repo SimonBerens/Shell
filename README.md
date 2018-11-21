@@ -3,17 +3,23 @@
 Making a shell in C
 
 ## How to Run
-Test
 1. In a bash shell, run:
-  `$ make`
-  `$ make run`
-  
+Test
+~~~
+$ make
+~~~
+2. Then run:
+~~~
+$ make run
+~~~
+
+
 ## Working Features
-* cd
+* `$ cd`
   * Needs a '/' at the end of the path to work
-* exit
+* `$ exit`
 * Basic bash commands
-  * e.g. ls, ps, etc.
+  * e.g. `ls`, `ps`, etc.
 * Semicolon parsing
   * Supports multiple commands
   * Filters empty commands
