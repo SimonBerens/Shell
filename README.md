@@ -28,6 +28,7 @@ Making a shell in C
 * Stdin/Stdout redirection
 * Quote support
 * History
+* Catch enter after spaces
 
 ## Limits
 * 1000 character input max
