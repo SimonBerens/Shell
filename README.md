@@ -38,7 +38,10 @@ Catches invalid commands | Prints error set in errno
 * 10 arguments per command max
 
 ## Function Descriptions
-
+Header | Arguments | Purpose | Return Value
+---|---|---|---
+void new_shell_line() | No arguments | Prints the current working directory | void
+static void sig_handler(int n) | n: signal number | Handles signals| void
 
 ## Known Bugs
 * No support for quotes
