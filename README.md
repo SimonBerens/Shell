@@ -3,6 +3,7 @@
 Making a shell in C
 
 ## How to Run
+Test
 1. In a bash shell, run:
   `$ make`
   `$ make run`
