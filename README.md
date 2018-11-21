@@ -14,26 +14,23 @@ $ make run
 
 
 ## Working Features
-* `$ cd`
-  * Needs a '/' at the end of the path to work
-* `$ exit`
-* Basic bash commands
-  * e.g. `ls`, `ps`, etc.
-* Semicolon parsing
-  * Supports multiple commands
-  * Filters empty commands
-* Shows current working directory
-* Supports arguments for commands
-* Catches ctrl-c
-* Arbitrary whitespace support
-* Catches invalid commands
+Feature | Notes
+--- | --- 
+`$cd` | Needs a '/' at the end of the path to work
+`$ exit`| All bash commands (e.g., `ls`, `ps`, etc.)
+Semicolon parsing | Supports multiple commands; Filters empty commands
+Shows current working directory | Color-coded
+Supports arguments for commands | e.g. `ls -l`
+Catches CTRL+C (^C) | Will send a SIGINT to the current process running
+Arbitrary whitespace support | Will ignore multiple spaces
+Catches invalid commands | Prints error set in errno
 
 ## To Be Added
 * Tab autocomplete (maybe)
 * Piping
 * Stdin/Stdout redirection
-* Quote support
-* History
+* Quote support 
+* History (up arrow)
 * Catch enter after spaces
 
 ## Limits
