@@ -6,15 +6,28 @@
 #include <errno.h>
 #include <limits.h>
 
+void new_shell_line() {
+    char cwd[PATH_MAX];
+    getcwd(cwd, sizeof(cwd));
+    printf("\x1b[34m%s\x1b[31m>\x1b[0m ", cwd); // print current working directory
+    fflush(stdout); // flushes buffer without printing newline (for sig_handler)
+}
+
+static void sig_handler(int n) {
+    printf("\n");
+    new_shell_line();
+}
+
 int main() {
+    signal(SIGINT, sig_handler);
     while (1) {
-        char cwd[PATH_MAX];
-        getcwd(cwd, sizeof(cwd));
-        printf("\x1b[34m%s\x1b[31m>\x1b[0m", cwd); // print current working directory
+        new_shell_line();
         char *command = calloc(1000, sizeof(char));
         scanf(" %[^\n]", command);
         char *prev;
         while ((prev = strsep(&command, ";"))) { // iterate through
+            while (*prev == ' ') prev++;
+            if (!*prev) continue; // takes care of empty commands
             char **args = calloc(10, sizeof(char *));
             for (int i = 0; prev; i += 1){
                 while (*prev == ' ') prev++; // skip through consecutive whitespace

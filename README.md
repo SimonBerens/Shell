@@ -15,15 +15,19 @@ Making a shell in C
   * e.g. ls, ps, etc.
 * Semicolon parsing
   * Supports multiple commands
+  * Filters empty commands
 * Shows current working directory
 * Supports arguments for commands
+* Catches ctrl-c
+* Arbitrary whitespace support
+* Catches invalid commands
 
 ## To Be Added
-* Tab autocomplete
+* Tab autocomplete (maybe)
 * Piping
 * Stdin/Stdout redirection
-* Errors
-* Catch ctrl-c
+* Quote support
+* History
 
 ## Limits
 * 1000 character input max
@@ -33,4 +37,4 @@ Making a shell in C
 
 
 ## Known Bugs
-* Shows error for trailing semicolon
+* No support for quotes
