@@ -26,14 +26,13 @@ int main() {
         scanf(" %[^\n]", command);
         char *prev;
         while ((prev = strsep(&command, ";"))) { // iterate through
-            while (*prev == ' ') prev++;
-            if (!*prev) continue; // takes care of empty commands
             char **args = calloc(10, sizeof(char *));
             for (int i = 0; prev; i += 1){
                 while (*prev == ' ') prev++; // skip through consecutive whitespace
                 args[i] = strsep(&prev, " ");
             }
-            if (!strcmp(args[0], "exit")) return 0;
+            if (!*(args[0])) continue; // takes care of empty commands
+            else if (!strcmp(args[0], "exit")) return 0;
             else if (!strcmp(args[0], "cd")) chdir(args[1]);
             else if (!fork()) {
                 execvp(args[0], args); // if execvp fails,
