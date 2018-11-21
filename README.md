@@ -4,7 +4,6 @@ Making a shell in C
 
 ## How to Run
 1. In a bash shell, run:
-Test
 ~~~
 $ make
 ~~~
