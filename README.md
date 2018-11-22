@@ -11,6 +11,7 @@ $ make
 ~~~
 $ make run
 ~~~
+3. Input any commands, then press enter to run the commands.
 
 
 ## Working Features
