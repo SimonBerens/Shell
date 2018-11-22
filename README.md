@@ -43,11 +43,8 @@ static void sig_handler(int n) | `n`: signal number | Handles signals| void
 int main() | No arguments | Generates shell, parses input, and runs commands | Returns 0 on success, and value of errno otherwise
 
 ## To Be Added
-- [ ] Tab autocomplete (maybe)
 - [ ] Piping
 - [ ] Stdin/Stdout redirection
-- [ ] Quote support 
-- [ ] History (up arrow)
 - [ ] Catch enter after spaces
 
 ## Limits
@@ -55,4 +52,3 @@ int main() | No arguments | Generates shell, parses input, and runs commands | R
 * 10 arguments per command max
 
 ## Known Bugs
-* No support for quotes
