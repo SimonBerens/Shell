@@ -2,6 +2,16 @@
 #### CrystalSimonhell
 Making a shell in C with [cwcrystal8](github.com/cwcrystal8) and [SimonBerens](github.com/SimonBerens)
 
+Table of Contents |
+---|
+[How to Run](#how-to-run)
+[Working Features](#working-features)
+[To Be Added](#to-be-added)
+[Limits](#limits)
+[Function Descriptions](#function-descriptions)
+[Known Bugs](#known-bugs)
+
+
 ## How to Run
 1. In a bash shell, run:
 ~~~
