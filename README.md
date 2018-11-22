@@ -2,14 +2,13 @@
 #### CrystalSimonhell
 Making a shell in C with [cwcrystal8](github.com/cwcrystal8) and [SimonBerens](github.com/SimonBerens)
 
-Table of Contents |
----|
-[How to Run](#how-to-run)
-[Working Features](#working-features)
-[To Be Added](#to-be-added)
-[Limits](#limits)
-[Function Descriptions](#function-descriptions)
-[Known Bugs](#known-bugs)
+## Table of Contents
+1. [How to Run](#how-to-run)
+2. [Working Features](#working-features)
+3. [To Be Added](#to-be-added)
+4. [Limits](#limits)
+5. [Function Descriptions](#function-descriptions)
+6. [Known Bugs](#known-bugs)
 
 
 ## How to Run
