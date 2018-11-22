@@ -39,7 +39,7 @@ Catches invalid commands | Prints error set in errno
 Header | Arguments | Purpose | Return Value
 ---|---|---|---
 void new_shell_line() | No arguments | Prints the current working directory | void
-static void sig_handler(int n) | n: signal number | Handles signals| void
+static void sig_handler(int n) | `n`: signal number | Handles signals| void
 int main() | No arguments | Generates shell, parses input, and runs commands | Returns 0 on success, and value of errno otherwise
 
 ## To Be Added
