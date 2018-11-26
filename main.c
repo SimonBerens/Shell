@@ -23,7 +23,7 @@ int main() {
     while (1) {
         new_shell_line();
         char *command = calloc(1000, sizeof(char));
-        fgets(command, 1001, stdin);
+        fgets(command, 1000, stdin);
         command[strlen(command)-1] = '\0'; // strip newline
         char *prev;
         while ((prev = strsep(&command, ";"))) { // iterate through
