@@ -37,7 +37,8 @@ int main() {
         while ((prev = strsep(&command, ";"))) { // iterate through
             int stdout_fd = dup(STDOUT_FILENO), stdin_fd = dup(STDIN_FILENO), fd = 0;
             char **args = calloc(10, sizeof(char *));
-            for (int i = 0; prev; i += 1){
+            int i = 0;
+            for (; prev; i += 1){
                 while (*prev == ' ') prev++; // skip through consecutive whitespace
                 args[i] = strsep(&prev, " ");
                 if (i && !strcmp(args[i - 1],">")) fd = redirect(0, 0, args[i], &fd);
@@ -48,10 +49,11 @@ int main() {
                 if (fd) args[--i] = args[i + 1];
             }
             if (!*(args[0])) continue; // takes care of empty commands
-            else if (!strcmp(args[0], "exit")) return 0;
+            if (!*(args[i-1])) args[i-1] = NULL; // takes care of trailing whitespace
+            if (!strcmp(args[0], "exit")) return 0;
             else if (!strcmp(args[0], "cd")) chdir(args[1]);
-            else{
-                if(!fork()) {
+            else {
+                if (!fork()) {
                     execvp(args[0], args); // if execvp fails,
                     exit(1); // the program will continue so we need to exit indicating an error
                 } else {
