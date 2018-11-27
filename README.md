@@ -33,8 +33,12 @@ Shows current working directory | Color-coded
 Supports arguments for commands | e.g. `ls -l`
 Catches CTRL+C (^C) | Will send a SIGINT to the current process running
 Arbitrary whitespace support | Will ignore multiple spaces
-Catches invalid commands | Prints error set in errno
+<<<<<<< HEAD
+Catches invalid commands | Prints error
 Redirecting | Suports `>`,`>>`,`2>`,`2>>`,`<`
+=======
+Catches invalid commands | Prints error
+
 
 ## Function Descriptions
 Header | Arguments | Purpose | Return Value
@@ -46,7 +50,6 @@ int redirect(int direction, int flag, char * file_name, int * fd_location) | `di
 
 ## To Be Added
 - [ ] Piping
-- [ ] Catch enter after spaces
 
 ## Limits
 * 1000 character input max
