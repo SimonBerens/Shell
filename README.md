@@ -26,8 +26,9 @@ $ make run
 ## Working Features
 Feature | Notes
 --- | ---
-`$ cd` | Needs a '/' at the end of the path to work
-`$ exit`| All bash commands (e.g., `ls`, `ps`, etc.)
+`cd` | Needs a '/' at the end of the path to work
+`exit`| Will exit regardless of any arguments
+All bash commands | e.g., `ls`, `ps`, etc.
 Semicolon parsing | Supports multiple commands; Filters empty commands
 Shows current working directory | Color-coded
 Supports arguments for commands | e.g. `ls -l`
