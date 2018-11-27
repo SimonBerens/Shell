@@ -35,9 +35,8 @@ int main() {
         command[strlen(command)-1] = '\0'; // strip newline
         char *prev;
         while ((prev = strsep(&command, ";"))) { // iterate through
-            int stdout_fd = dup(STDOUT_FILENO), stdin_fd = dup(STDIN_FILENO), fd = 0;
+            int stdout_fd = dup(STDOUT_FILENO), stdin_fd = dup(STDIN_FILENO), fd = 0, i = 0, status;
             char **args = calloc(10, sizeof(char *));
-            int i = 0;
             for (; prev; i += 1){
                 while (*prev == ' ') prev++; // skip through consecutive whitespace
                 args[i] = strsep(&prev, " ");
@@ -46,7 +45,7 @@ int main() {
                 else if (i && !strcmp(args[i - 1], "2>")) fd = redirect(2, 0, args[i], &fd);
                 else if (i && !strcmp(args[i - 1], "2>>")) fd = redirect(2, 1, args[i], &fd);
                 else if (i && !strcmp(args[i - 1], "<")) fd = redirect(1, 0, args[i], &fd);
-                if (fd) args[--i] = args[i + 1];
+                if (fd) args[i - 1] = NULL;
             }
             if (!*(args[0])) continue; // takes care of empty commands
             if (!*(args[i-1])) args[i-1] = NULL; // takes care of trailing whitespace
@@ -57,7 +56,6 @@ int main() {
                     execvp(args[0], args); // if execvp fails,
                     exit(1); // the program will continue so we need to exit indicating an error
                 } else {
-                    int status;
                     wait(&status); // wait for child to finish, check exit code for failure
                     if (WEXITSTATUS(status)) printf("%s failed\n", args[0]);
                 }
