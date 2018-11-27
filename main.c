@@ -48,14 +48,14 @@ int main() {
                 if (fd) args[i - 1] = NULL;
             }
             if (!*(args[0])) continue; // takes care of empty commands
-            if (!*(args[i-1])) args[i-1] = NULL; // takes care of trailing whitespace
+            if (!*(args[i-1])) args[(i--)-1] = NULL; // takes care of trailing whitespace
             if (!strcmp(args[0], "exit")) return 0;
             else if (!strcmp(args[0], "cd")) chdir(args[1]);
             else {
                 if (!fork()) {
                     execvp(args[0], args); // if execvp fails,
                     exit(1); // the program will continue so we need to exit indicating an error
-                } else {
+                } else if (strcmp(args[i-1], "&")){
                     wait(&status); // wait for child to finish, check exit code for failure
                     if (WEXITSTATUS(status)) printf("%s failed\n", args[0]);
                 }
