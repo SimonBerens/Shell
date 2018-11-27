@@ -35,13 +35,16 @@ int main() {
             if (!*(args[0])) continue; // takes care of empty commands
             else if (!strcmp(args[0], "exit")) return 0;
             else if (!strcmp(args[0], "cd")) chdir(args[1]);
-            else if (!fork()) {
-                execvp(args[0], args); // if execvp fails,
-                exit(errno); // the program will continue so we need to exit indicating an error
+            else{
+                if(!fork()) {
+                    execvp(args[0], args); // if execvp fails,
+                    exit(1); // the program will continue so we need to exit indicating an error
+                } else {
+                    int status;
+                    wait(&status); // wait for child to finish, check exit code for failure
+                    if (WEXITSTATUS(status)) printf("%s failed\n", args[0]);
+                }
             }
-            int status;
-            wait(&status); // wait for child to finish, check exit code for failure
-            if (WEXITSTATUS(status)) printf("%s\n", strerror(WEXITSTATUS(status)));
         }
     }
 }
