@@ -33,7 +33,7 @@ Shows current working directory | Color-coded
 Supports arguments for commands | e.g. `ls -l`
 Catches CTRL+C (^C) | Will send a SIGINT to the current process running
 Arbitrary whitespace support | Will ignore multiple spaces
-Catches invalid commands | Prints error set in errno
+Catches invalid commands | Prints error
 
 ## Function Descriptions
 Header | Arguments | Purpose | Return Value
@@ -45,7 +45,6 @@ int main() | No arguments | Generates shell, parses input, and runs commands | R
 ## To Be Added
 - [ ] Piping
 - [ ] Stdin/Stdout redirection
-- [ ] Catch enter after spaces
 
 ## Limits
 * 1000 character input max
