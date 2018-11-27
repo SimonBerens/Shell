@@ -36,7 +36,6 @@ Catches CTRL+C (^C) | Will send a SIGINT to the current process running
 Arbitrary whitespace support | Will ignore multiple spaces
 Catches invalid commands | Prints error
 Redirecting | Supports `>`, `>>`, `2>`, `2>>`, `<`
-Catches invalid commands | Prints error
 
 
 ## Function Descriptions
