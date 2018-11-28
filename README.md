@@ -54,4 +54,4 @@ int redirect(int direction, int flag, char * file_name, int * fd_location) | `di
 * 10 arguments per command max
 
 ## Known Bugs
-* Semicolon parsing does not work if there is a space before the semicolon
+
