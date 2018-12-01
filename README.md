@@ -28,7 +28,7 @@ Feature | Notes
 --- | ---
 `cd` | Needs a '/' at the end of the path to work
 `exit`| Will exit regardless of any arguments
-All bash commands | e.g., `ls`, `ps`, etc.
+All bash commands | e.g. `ls`, `ps`, etc.
 Semicolon parsing | Supports multiple commands; Filters empty commands
 Shows current working directory | Color-coded
 Supports arguments for commands | e.g. `ls -l`
@@ -37,6 +37,7 @@ Arbitrary whitespace support | Will ignore multiple spaces
 Catches invalid commands | Prints error
 Redirecting | Supports `>`, `>>`, `2>`, `2>>`, `<`
 Background processes | Supports &
+Chain piping | e.g. `ls -l \| grep .c \| wc`
 
 
 ## Function Descriptions
@@ -46,9 +47,6 @@ void new_shell_line() | No arguments | Prints the current working directory | vo
 static void active_sig_handler(int n) | `n`: signal number | Handles signals| void
 int main() | No arguments | Generates shell, parses input, and runs commands | Returns 0 on success, and value of errno otherwise
 int redirect(int direction, int flag, char * file_name, int * fd_location) | `direction`: indicates the buffer that is being redirected <br> `flag`: indicates the flags to open the file with <br> `file_name`: the name of the file that the buffer is redirected to <br> `fd_location`: a pointer to the file descriptor of the opened `file_name` | Returns the file descriptor of the opened `file_name`
-
-## To Be Added
-- [ ] Piping
 
 ## Limits
 * 1000 character input max
