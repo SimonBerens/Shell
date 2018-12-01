@@ -43,7 +43,7 @@ Background processes | Supports &
 Header | Arguments | Purpose | Return Value
 ---|---|---|---
 void new_shell_line() | No arguments | Prints the current working directory | void
-static void sig_handler(int n) | `n`: signal number | Handles signals| void
+static void active_sig_handler(int n) | `n`: signal number | Handles signals| void
 int main() | No arguments | Generates shell, parses input, and runs commands | Returns 0 on success, and value of errno otherwise
 int redirect(int direction, int flag, char * file_name, int * fd_location) | `direction`: indicates the buffer that is being redirected <br> `flag`: indicates the flags to open the file with <br> `file_name`: the name of the file that the buffer is redirected to <br> `fd_location`: a pointer to the file descriptor of the opened `file_name` | Returns the file descriptor of the opened `file_name`
 
