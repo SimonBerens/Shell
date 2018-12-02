@@ -26,7 +26,7 @@ $ make run
 ## Working Features
 Feature | Notes
 --- | ---
-`cd` | Needs a '/' at the end of the path to work
+`cd` | If no directory specified, current working directory does not change
 `exit`| Will exit regardless of any arguments
 All bash commands | e.g. `ls`, `ps`, etc.
 Semicolon parsing | Supports multiple commands; Filters empty commands
@@ -36,7 +36,7 @@ Catches CTRL+C (^C) | Will send a SIGINT to the current process running
 Arbitrary whitespace support | Will ignore multiple spaces
 Catches invalid commands | Prints error
 Redirecting | Supports `>`, `>>`, `2>`, `2>>`, `<`
-Background processes | Supports &
+Background processes | Supports `&`
 Chain piping | e.g. `ls -l \| grep .c \| wc`
 
 
@@ -45,12 +45,14 @@ Header | Arguments | Purpose | Return Value
 ---|---|---|---
 void new_shell_line() | No arguments | Prints the current working directory | void
 static void active_sig_handler(int n) | `n`: signal number | Handles signals| void
+static void passive_sig_handler(int n) | `n`: signal number | Prints newline to flush stdout | void
+void redirect(int direction, int flag, char * file_name, int * fd_location) | `direction`: indicates the buffer that is being redirected <br> `flag`: indicates the flags to open the file with <br> `file_name`: the name of the file that the buffer is redirected to <br> `fd_location`: a pointer to the file descriptor of the opened `file_name` | void
 int main() | No arguments | Generates shell, parses input, and runs commands | Returns 0 on success, and value of errno otherwise
-int redirect(int direction, int flag, char * file_name, int * fd_location) | `direction`: indicates the buffer that is being redirected <br> `flag`: indicates the flags to open the file with <br> `file_name`: the name of the file that the buffer is redirected to <br> `fd_location`: a pointer to the file descriptor of the opened `file_name` | Returns the file descriptor of the opened `file_name`
 
 ## Limits
 * 1000 character input max
 * 10 arguments per command max
+* `cd` does not support any flags
 
 ## Known Bugs
-
+* Pressing tab will allow the user to delete the shell's displayed current working directory

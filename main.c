@@ -23,12 +23,11 @@ static void passive_sig_handler(int n) {
     printf("\n");
 }
 
-int redirect(int direction, int flag, char *file_name, int *fd_location) {
+void redirect(int direction, int flag, char *file_name, int *fd_location) {
     int flags[2] = {O_CREAT | O_WRONLY, O_APPEND | O_CREAT | O_WRONLY}, directions[3] = {STDOUT_FILENO, STDIN_FILENO,
                                                                                          STDERR_FILENO};
     *fd_location = open(file_name, flags[flag], 0777);
     dup2(*fd_location, directions[direction]);
-    return *fd_location;
 }
 
 int main() {
@@ -49,11 +48,11 @@ int main() {
                 for (; prev; i += 1) {
                     while (*prev == ' ') prev++; // skip through consecutive whitespace
                     args[i] = strsep(&prev, " ");
-                    if (i && !strcmp(args[i - 1], ">")) fd = redirect(0, 0, args[i], &fd);
-                    else if (i && !strcmp(args[i - 1], ">>")) fd = redirect(0, 1, args[i], &fd);
-                    else if (i && !strcmp(args[i - 1], "2>")) fd = redirect(2, 0, args[i], &fd);
-                    else if (i && !strcmp(args[i - 1], "2>>")) fd = redirect(2, 1, args[i], &fd);
-                    else if (i && !strcmp(args[i - 1], "<")) fd = redirect(1, 0, args[i], &fd);
+                    if (i && !strcmp(args[i - 1], ">")) redirect(0, 0, args[i], &fd);
+                    else if (i && !strcmp(args[i - 1], ">>")) redirect(0, 1, args[i], &fd);
+                    else if (i && !strcmp(args[i - 1], "2>")) redirect(2, 0, args[i], &fd);
+                    else if (i && !strcmp(args[i - 1], "2>>")) redirect(2, 1, args[i], &fd);
+                    else if (i && !strcmp(args[i - 1], "<")) redirect(1, 0, args[i], &fd);
                     if (fd) args[i - 1] = NULL;
                 }
                 if (!*(args[0])) continue; // takes care of empty commands
