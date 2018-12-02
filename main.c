@@ -24,8 +24,7 @@ static void passive_sig_handler(int n) {
 }
 
 void redirect(int direction, int flag, char *file_name, int *fd_location) {
-    int flags[2] = {O_CREAT | O_WRONLY, O_APPEND | O_CREAT | O_WRONLY}, directions[3] = {STDOUT_FILENO, STDIN_FILENO,
-                                                                                         STDERR_FILENO};
+    int flags[3] = {O_CREAT | O_WRONLY, O_APPEND | O_CREAT | O_WRONLY, O_CREAT | O_RDONLY}, directions[3] = {STDOUT_FILENO, STDIN_FILENO, STDERR_FILENO};
     *fd_location = open(file_name, flags[flag], 0777);
     dup2(*fd_location, directions[direction]);
 }
@@ -52,7 +51,7 @@ int main() {
                     else if (i && !strcmp(args[i - 1], ">>")) redirect(0, 1, args[i], &fd);
                     else if (i && !strcmp(args[i - 1], "2>")) redirect(2, 0, args[i], &fd);
                     else if (i && !strcmp(args[i - 1], "2>>")) redirect(2, 1, args[i], &fd);
-                    else if (i && !strcmp(args[i - 1], "<")) redirect(1, 0, args[i], &fd);
+                    else if (i && !strcmp(args[i - 1], "<")) redirect(1, 2, args[i], &fd);
                     if (fd) args[i - 1] = NULL;
                 }
                 if (!*(args[0])) continue; // takes care of empty commands
@@ -61,9 +60,10 @@ int main() {
                 else if (!strcmp(args[0], "cd")) chdir(args[1]);
                 else {
                     if (!fork()) {
-                        dup2(in, STDIN_FILENO);
                         if (command) dup2(p[WRITE], STDOUT_FILENO);
                         close(p[READ]);
+                        if(!fd) dup2(in, STDIN_FILENO);
+
                         execvp(args[0], args); // if execvp fails,
                         exit(1); // the program will continue so we need to exit indicating an error
                     }
