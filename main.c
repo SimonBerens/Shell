@@ -25,7 +25,7 @@ static void passive_sig_handler(int n) {
 
 void redirect(int direction, int flag, char *file_name, int *fd_location) {
     int flags[3] = {O_CREAT | O_WRONLY, O_APPEND | O_CREAT | O_WRONLY, O_CREAT | O_RDONLY}, directions[3] = {STDOUT_FILENO, STDIN_FILENO, STDERR_FILENO};
-    *fd_location = open(file_name, flags[flag], 0777);
+    *fd_location = open(file_name, flags[flag], 0777); // sets the file
     dup2(*fd_location, directions[direction]);
 }
 
@@ -33,7 +33,7 @@ int main() {
     signal(SIGINT, active_sig_handler);
     while (1) {
         new_shell_line();
-        char *line = calloc(1000, sizeof(char));
+        char *line = calloc(1000, sizeof(char)), *start = line;
         fgets(line, 1000, stdin);
         line[strlen(line) - 1] = '\0'; // strip newline
         char *prev;
@@ -41,9 +41,10 @@ int main() {
             char *command = prev;
             int p[2], READ = 0, WRITE = 1, in = STDIN_FILENO;
             while ((prev = strsep(&command, "|"))) { // iterate by pipe
+                int stdout_fd = dup(STDOUT_FILENO), stdin_fd = dup(STDIN_FILENO), stderr_fd = dup(STDERR_FILENO);
                 pipe(p);
-                int stdout_fd = dup(STDOUT_FILENO), stdin_fd = dup(STDIN_FILENO), fd = 0, i = 0, status;
                 char **args = calloc(10, sizeof(char *));
+                int i = 0, fd = 0;
                 for (; prev; i += 1) {
                     while (*prev == ' ') prev++; // skip through consecutive whitespace
                     args[i] = strsep(&prev, " ");
@@ -56,19 +57,25 @@ int main() {
                 }
                 if (!*(args[0])) continue; // takes care of empty commands
                 if (!*(args[i - 1])) args[(i--) - 1] = NULL; // takes care of trailing whitespace
-                if (!strcmp(args[0], "exit")) return 0;
+                if (!strcmp(args[0], "exit")) {
+                    free(start);
+                    free(args);
+                    close(p[READ]);
+                    close(p[WRITE]);
+                    exit(0);
+                }
                 else if (!strcmp(args[0], "cd")) chdir(args[1]);
                 else {
                     if (!fork()) {
                         if (command) dup2(p[WRITE], STDOUT_FILENO);
                         close(p[READ]);
                         if(!fd) dup2(in, STDIN_FILENO);
-
                         execvp(args[0], args); // if execvp fails,
                         exit(1); // the program will continue so we need to exit indicating an error
                     }
                     signal(SIGINT, passive_sig_handler);
                     if (strcmp(args[i - 1], "&")) {
+                        int status;
                         wait(&status); // wait for child to finish, check exit code for failure
                         if (WEXITSTATUS(status)) printf("%s failed\n", args[0]);
                     }
@@ -79,7 +86,10 @@ int main() {
                 close(fd);
                 dup2(stdout_fd, STDOUT_FILENO);
                 dup2(stdin_fd, STDIN_FILENO);
+                dup2(stderr_fd, STDERR_FILENO);
+                free(args);
             }
         }
+        free(start);
     }
 }
